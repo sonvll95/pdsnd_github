@@ -12,10 +12,11 @@ def get_filters():
     
     # Define lists of valid cities, months, and days
     valid_cities = ["chicago", "new york city", "washington"]
-    valid_months = [month.lower() for month in calendar.month_name[1:]]
-    valid_months.append("all")
-    valid_days = [day.lower() for day in calendar.day_name]
-    valid_days.append("all")
+    # Valid months for analysis (all lowercase)
+    valid_months = [month.lower() for month in calendar.month_name[1:]] + ["all"]
+
+    # Valid days of the week for analysis (all lowercase)
+    valid_days = [day.lower() for day in calendar.day_name] + ["all"]
     
     # Prompt user for city until a valid city is entered
     while True:
@@ -44,20 +45,40 @@ def get_filters():
     print('-'*40)
     return city, month, day
 
+
 def load_data(city, month, day):
-    
+    """
+    Loads data from a CSV file based on the specified city, month, and day filters.
+
+    Args:
+        city (str): Name of the city for which data is to be loaded.
+        month (str): Name of the month (e.g., 'January', 'February', etc.), or 'all' for all months.
+        day (str): Name of the day of the week (e.g., 'Monday', 'Tuesday', etc.), or 'all' for all days.
+
+    Returns:
+        DataFrame: A DataFrame containing filtered data based on the specified city, month, and day.
+
+    """
+
+    # Load data from the CSV file corresponding to the specified city
     df = pd.read_csv(CITY_DATA[city])
 
+    # Convert the 'Start Time' column to datetime format
     df['Start Time'] = pd.to_datetime(df['Start Time'])
-    df['month'] = df['Start Time'].dt.month_name().str.lower()
-    df['day_of_week'] = df['Start Time'].dt.day_name().str.lower()  
 
+    # Extract month and day of the week from the 'Start Time' column
+    df['month'] = df['Start Time'].dt.month_name().str.lower()
+    df['day_of_week'] = df['Start Time'].dt.day_name().str.lower()
+
+    # Filter the DataFrame based on the specified month
     if month != 'all':
         df = df[df['month'] == month]
+
+    # Filter the DataFrame based on the specified day of the week
     if day != 'all':
         df = df[df['day_of_week'] == day]
-    return df
 
+    return df
 
 def time_stats(df):
     """Displays statistics on the most frequent times of travel."""
