@@ -7,7 +7,7 @@ This project was created on April 10, 2024.
 Data Analysis for BikeShare
 
 ### Description
-Describe what your project is about and what it does
+The Data Analysis for BikeShare project aims to explore, analyze, and derive insights from a dataset related to bike-sharing systems.
 
 ### Files used
 Include the files used
