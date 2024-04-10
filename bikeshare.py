@@ -12,10 +12,11 @@ def get_filters():
     
     # Define lists of valid cities, months, and days
     valid_cities = ["chicago", "new york city", "washington"]
-    valid_months = [month.lower() for month in calendar.month_name[1:]]
-    valid_months.append("all")
-    valid_days = [day.lower() for day in calendar.day_name]
-    valid_days.append("all")
+    # Valid months for analysis (all lowercase)
+    valid_months = [month.lower() for month in calendar.month_name[1:]] + ["all"]
+
+    # Valid days of the week for analysis (all lowercase)
+    valid_days = [day.lower() for day in calendar.day_name] + ["all"]
     
     # Prompt user for city until a valid city is entered
     while True:
